@@ -60,7 +60,7 @@ namespace JokesBot
                             break;
                         case "/joke":
                         case "анекдот":
-                            Answer = "No jokes yet:(";//TODO Insert call to jokes getter
+                            Answer = Markov.MakeText(1, random);//"No jokes yet:(";//TODO Insert call to jokes getter
                             break;
                         case "/knowme":
                         case "знаешь меня?":

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading;
+using AnekParser;
+using Newtonsoft.Json;
 using NLog;
 using Telegram;
 using Telegram.Bot.Types.Enums;
@@ -13,15 +15,30 @@ using Telegram.Bot.Types.Enums;
 
 namespace JokesBot
 {
+    public static class Extensions
+    {
+        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> func)
+            => enumerable.Select(x =>
+            {
+                func(x);
+                return 0;
+            }).ToList();
+    }
 
     partial class Program
     {
+        public static NodeChain Markov { get; set; }
+
+        public static Random random = new Random(); 
+        
         /// <summary>
         /// "-nopreload" - prevents loading shedules on start
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            Markov = JsonConvert.DeserializeObject<NodeChain>(File.ReadAllText("markov.json"));
+            
             Json_Data.ReadData();
             KeyboardInit();
 

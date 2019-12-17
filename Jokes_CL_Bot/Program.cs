@@ -37,8 +37,13 @@ namespace JokesBot
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Markov = JsonConvert.DeserializeObject<NodeChain>(File.ReadAllText("markov.json"));
-            
+            using (StreamReader file = File.OpenText("markov.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                Markov = (NodeChain)serializer.Deserialize(file, typeof(NodeChain));
+            }
+            //Markov = System.Text.Json.JsonSerializer.Deserialize<NodeChain>(File.ReadAllText("markov.json"));
+
             Json_Data.ReadData();
             KeyboardInit();
 

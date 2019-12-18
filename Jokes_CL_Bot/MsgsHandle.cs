@@ -155,10 +155,6 @@ namespace JokesBot
         private static readonly string _help = @"Список команд: 
 /joke - выдать анекдот
 /info — краткое описание бота    
-/knowme — информация о пользователе
-/eveningNotify — настроить вечернее уведомление
-/morningNotify — настроить утреннее уведомление
-/forget — сменить пользователя
 /help — список команд";
     }
 }

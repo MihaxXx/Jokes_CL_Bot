@@ -24,6 +24,7 @@ namespace AnekParser
             _frequencies = new Dictionary<string, double>();
             var count = Count.Sum(kv => kv.Value);
             Count.ForEach(kv => _frequencies[kv.Key] = kv.Value * 1.0 / count);
+            Count = new Dictionary<string, int>();
         }
 
         public string GetNext(Random r)

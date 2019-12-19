@@ -122,7 +122,11 @@ namespace JokesBot
             }
             catch (Exception ex) when (ex is System.Net.Http.HttpRequestException && ex.Message.Contains("429"))
             {
-                logger.Warn(ex, $"Сетевая ошибка при ответе @{msg.Chat.Username}");
+                logger.Warn(ex, $"Network error while answering @{msg.Chat.Username}");
+            }
+            catch (Exception ex) when (ex is Telegram.Bot.Exceptions.ApiRequestException)
+            {
+                logger.Warn(ex, $"Telegram API error while answering @{msg.Chat.Username}");
             }
         }
 

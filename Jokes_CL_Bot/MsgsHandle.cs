@@ -83,8 +83,8 @@ namespace JokesBot
                             return;
 
 
-                        case "/forget":
-                        case "забудь меня":
+                        case "/stop":
+                        case "стоп":
                             UserList.Remove(msg.Chat.Id);
                             Json_Data.WriteData();
                             Answer = "Я вас забыл! Для повторной регистрации пиши /start";

@@ -56,7 +56,7 @@ namespace AnekParser
         public void ParseText(List<List<string>> text, List<string> lemmas)
         {
             text.ForEach(l => l.Add("."));
-            int i = 0;
+            //int i = 0;
             var sentence = text.SelectMany(x => x).Select(x =>
             {
                 return x;

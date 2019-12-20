@@ -60,7 +60,11 @@ namespace JokesBot
                             break;
                         case "/joke":
                         case "анекдот":
-                            Answer = Markov.MakeText(random.Next(3, 5), random);
+                            do
+                            {
+                                Answer = Markov.MakeText(random.Next(3, 5), random);
+                            } while (Answer.Length > 4096); //Search for new joke if it exceeds Telegram text msg limit
+                      
                             break;
                         case "/knowme":
                         case "знаешь меня?":
@@ -80,8 +84,8 @@ namespace JokesBot
                             return;
 
 
-                        case "/forget":
-                        case "забудь меня":
+                        case "/stop":
+                        case "стоп":
                             UserList.Remove(msg.Chat.Id);
                             Json_Data.WriteData();
                             Answer = "Я вас забыл! Для повторной регистрации пиши /start";
@@ -119,7 +123,11 @@ namespace JokesBot
             }
             catch (Exception ex) when (ex is System.Net.Http.HttpRequestException && ex.Message.Contains("429"))
             {
-                logger.Warn(ex, $"Сетевая ошибка при ответе @{msg.Chat.Username}");
+                logger.Warn(ex, $"Network error while answering @{msg.Chat.Username}");
+            }
+            catch (Exception ex) when (ex is Telegram.Bot.Exceptions.ApiRequestException)
+            {
+                logger.Warn(ex, $"Telegram API error while answering @{msg.Chat.Username}");
             }
         }
 
@@ -155,10 +163,6 @@ namespace JokesBot
         private static readonly string _help = @"Список команд: 
 /joke - выдать анекдот
 /info — краткое описание бота    
-/knowme — информация о пользователе
-/eveningNotify — настроить вечернее уведомление
-/morningNotify — настроить утреннее уведомление
-/forget — сменить пользователя
 /help — список команд";
     }
 }

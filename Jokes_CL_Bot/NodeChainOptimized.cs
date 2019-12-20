@@ -6,6 +6,7 @@ namespace AnekParser
 {
     public class NodeChainOptimized
     {
+        private static  string[] delim = { ".", "!", "?" };
         public string[] Keys { get; set; }
         public Node[] Values { get; set; }
 
@@ -50,12 +51,12 @@ namespace AnekParser
             while (number > 0)
             {
                 //Console.WriteLine($"-{word0} {word1}-");
-                var t = !ContainsKey($"{word0} {word1}") ? (ContainsKey(word1) ? this[word1].GetNext(r) : "<error>") : this[$"{word0} {word1}"].GetNext(r);
+                var t = !ContainsKey($"{word0} {word1}") ? this[word1].GetNext(r) : this[$"{word0} {word1}"].GetNext(r);
                 word0 = word1;
                 word1 = t;
                 if (word0 == "")
                     break;
-                if (word0 == ".")
+                if (delim.Contains(word0))
                     number--;
                 list.Add(word0);
             }
@@ -66,7 +67,13 @@ namespace AnekParser
 
         public string MakeText(int number, Random r)
         {
-            return MakeSentence(r, number).Replace(" .", ".");
+            return MakeSentence(r, number)
+                .Replace(" .", ".")
+                .Replace(" ,", ",")
+                .Replace(" !", "!")
+                .Replace(" ?", "?")
+                .Replace(" :", ":")
+                .Replace("\n ", "\n");
         }
     }
 }

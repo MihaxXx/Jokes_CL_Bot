@@ -27,7 +27,7 @@ namespace JokesBot
 
     partial class Program
     {
-        public static NodeChain Markov { get; set; }
+        public static NodeChainOptimized Markov { get; set; }
 
         public static Random random = new Random(); 
         
@@ -37,7 +37,7 @@ namespace JokesBot
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Markov = JsonConvert.DeserializeObject<NodeChain>(File.ReadAllText("markov.json"));
+            Markov = JsonConvert.DeserializeObject<NodeChainOptimized>(File.ReadAllText("markov-o.json"));
             
             Json_Data.ReadData();
             KeyboardInit();

@@ -60,7 +60,7 @@ namespace JokesBot
                             break;
                         case "/joke":
                         case "анекдот":
-                            Answer = Markov.MakeText(1, random);
+                            Answer = Markov.MakeText(random.Next(3, 5), random);
                             break;
                         case "/knowme":
                         case "знаешь меня?":

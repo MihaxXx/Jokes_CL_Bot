@@ -62,7 +62,7 @@ namespace JokesBot
                         case "анекдот":
                             do
                             {
-                                Answer = Markov.MakeText(1, random);
+                                Answer = Markov.MakeText(1, random).Replace(" . ",". ");
                             } while (Answer.Length > 4096); //Search for new joke if it exceeds Telegram text msg limit
                             break;
                         case "/knowme":
